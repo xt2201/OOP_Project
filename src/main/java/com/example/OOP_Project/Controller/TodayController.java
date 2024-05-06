@@ -2,6 +2,8 @@ package com.example.OOP_Project.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +26,14 @@ public class TodayController {
             {"Title 9", "Type 9", "News 9", "Summary 9", "Category 9", "Tag 9", "Time 9", "https://www.facebook.com/", "https://www.w3schools.com/images/w3schools_logo_436_2.png"},
             {"Title 10", "Type 10", "News 10", "Summary 10", "Category 10", "Tag 10", "Time 10", "https://www.facebook.com/", "https://www.w3schools.com/images/w3schools_logo_436_2.png"}
     };
+    @FXML private TextField input;
+
+
+    public void handleSearch() {
+        String searchText = input.getText();
+        System.out.println("Từ khóa tìm kiếm: " + searchText);
+
+    }
 
     @FXML private DetailController detailController;
 
@@ -38,6 +48,7 @@ public class TodayController {
     public void initialize() {
         if (articleContainer != null) {
             addArticles();
+            debug_fetch();
         }
         if (laterContainer != null) {
             addreadlater();
@@ -46,6 +57,7 @@ public class TodayController {
     public String debug() {
         return "Hello";
     }
+
     public static ArrayList<Article> articles = new ArrayList<>();
 public void addArticles() {
     articles.clear();
@@ -127,10 +139,18 @@ public void addArticles() {
         }
     }
 
+
+    public void debug_fetch() {
+        for (int i = 0; i < 10; i++) {
+            Label label = new Label("Fetch " + i);
+            label.setTextFill(javafx.scene.paint.Color.WHITE);
+            articleContainer.getChildren().add(label);
+        }
+    }
+
     public void setPane(String title, String type, String news, String summary, String category, String tag, String time, String facebookLink, String imageLink) {
         detailController.showDetail();
         detailController.setDetail(title, type, news, summary, category, tag, time, facebookLink, imageLink);
     }
-
 
 }
