@@ -66,7 +66,7 @@ def handle(client: Socket):
                 elif cmd == "-lower":
                     send_message(client, " ".join(args).lower())
             else:
-                send_message(client, "Done")
+                send_message(client, "Searching Done")
             # broadcast(message)
         except Exception as e:
             print(e)
