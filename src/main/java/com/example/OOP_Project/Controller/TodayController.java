@@ -10,8 +10,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
+
+import com.example.OOP_Project.ClientHandler.SocketClient;
 
 public class TodayController {
     String[][] inputs = {
@@ -42,6 +46,10 @@ public class TodayController {
     public void handleSearch() {
         String searchText = input.getText();
         System.out.println("Từ khóa tìm kiếm: " + searchText);
+        if (!searchText.isEmpty()) {
+            // client.sendMessage(searchText);
+            // input.clear();
+        }
 
     }
 
@@ -54,6 +62,9 @@ public class TodayController {
     @FXML
     private VBox laterContainer;
 
+    // Client
+    private SocketClient client;
+
     public void initialize() {
         if (articleContainer != null) {
             addArticles();
@@ -61,6 +72,11 @@ public class TodayController {
         }
         if (laterContainer != null) {
             addreadlater();
+        }
+        try {
+            client = new SocketClient(new Socket("127.0.0.1", 8888));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

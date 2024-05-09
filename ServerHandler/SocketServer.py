@@ -1,6 +1,7 @@
 import socket
 from threading import Thread
 
+Socket = socket.socket
 
 IP = "127.0.0.1"
 PORT = 8888
@@ -9,13 +10,13 @@ ENCODING = "utf-8"
 MAX_CONNECTION = 5
 
 # Start the server
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server = Socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
 server.bind((IP, PORT))
 server.listen(MAX_CONNECTION)
 print(f"Server started at {IP} on port {PORT}")
 
-clients: list[socket.socket] = []
+clients: list[Socket] = []
 nicknames: list[str] = []
 
 
@@ -30,7 +31,7 @@ def decode_message(bytes_msg: bytes):
     return msg
 
 
-def send_message(client: socket.socket, msg: str) -> None:
+def send_message(client: Socket, msg: str) -> None:
     byte_msg = encode_message(msg)
     client.send(byte_msg)
 
@@ -40,7 +41,7 @@ def broadcast(message: str) -> None:
         send_message(client, message)
 
 
-def receive_message(client: socket.socket) -> str:
+def receive_message(client: Socket) -> str:
     msg_header = client.recv(HEADER_LENGTH)
     msg_length = int.from_bytes(msg_header)
     bytes_msg = client.recv(msg_length)
@@ -48,7 +49,7 @@ def receive_message(client: socket.socket) -> str:
     return msg
 
 
-def handle(client: socket.socket):
+def handle(client: Socket):
     while True:
         try:
             message = receive_message(client)
