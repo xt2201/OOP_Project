@@ -83,6 +83,11 @@ public class TodayController {
 
     public static ArrayList<Article> articles = new ArrayList<>();
 
+    public void refreshArticles() {
+        articleContainer.getChildren().clear();
+        addArticles();
+    }
+
     public void addArticles() {
         articles.clear();
         for (int i = 0; i < inputs.length; i++) {
