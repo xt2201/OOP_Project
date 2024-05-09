@@ -46,11 +46,7 @@ public class TodayController {
     public void handleSearch() {
         String searchText = input.getText();
         System.out.println("Từ khóa tìm kiếm: " + searchText);
-        if (!searchText.isEmpty()) {
-            // client.sendMessage(searchText);
-            // input.clear();
-        }
-
+        client.sendMessageToServer(searchText);
     }
 
     @FXML

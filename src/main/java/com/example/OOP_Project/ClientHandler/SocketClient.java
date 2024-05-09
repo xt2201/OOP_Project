@@ -61,7 +61,7 @@ public class SocketClient {
         }
     }
 
-    public void receiveMessageFromServer() {
+    private void receiveMessageFromServer() {
         new Thread(new Runnable() {
             @Override
             public void run() {

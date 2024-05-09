@@ -51,10 +51,12 @@ def receive_message(client: Socket) -> str:
 
 def handle(client: Socket):
     while True:
+        index = clients.index(client)
+        nickname = nicknames[index]
         try:
             message = receive_message(client)
             client_input = message[message.find(":") + 1 :].strip()
-            print(client_input)
+            print(f"{nickname}: {client_input}")
             if client_input[0] == "-":
                 # Switch to command mode
                 cmd, *args = client_input.split(" ")
@@ -67,11 +69,8 @@ def handle(client: Socket):
             # broadcast(message)
         except Exception as e:
             print(e)
-            index = clients.index(client)
             clients.remove(client)
             client.close()
-            nickname = nicknames[index]
-            # broadcast(f"{nickname} has left the chat")
             nicknames.remove(nickname)
             break
 
