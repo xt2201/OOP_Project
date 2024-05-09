@@ -5,7 +5,7 @@ Socket = socket.socket
 
 IP = "127.0.0.1"
 PORT = 8888
-HEADER_LENGTH = 2
+BUFFER_SIZE = 2
 ENCODING = "utf-8"
 MAX_CONNECTION = 5
 
@@ -21,7 +21,7 @@ nicknames: list[str] = []
 
 
 def encode_message(msg: str) -> bytes:
-    msg_length = len(msg).to_bytes(HEADER_LENGTH)
+    msg_length = len(msg).to_bytes(BUFFER_SIZE)
     bytes_msg = msg_length + msg.encode("utf-8")
     return bytes_msg
 
@@ -42,7 +42,7 @@ def broadcast(message: str) -> None:
 
 
 def receive_message(client: Socket) -> str:
-    msg_header = client.recv(HEADER_LENGTH)
+    msg_header = client.recv(BUFFER_SIZE)
     msg_length = int.from_bytes(msg_header)
     bytes_msg = client.recv(msg_length)
     msg = decode_message(bytes_msg)
@@ -53,7 +53,6 @@ def handle(client: Socket):
     while True:
         try:
             message = receive_message(client)
-
             client_input = message[message.find(":") + 1 :].strip()
             print(client_input)
             if client_input[0] == "-":
@@ -64,15 +63,15 @@ def handle(client: Socket):
                     send_message(client, " ".join(args).upper())
                 elif cmd == "-lower":
                     send_message(client, " ".join(args).lower())
-            else:
-                broadcast(message)
+            # else:
+            # broadcast(message)
         except Exception as e:
             print(e)
             index = clients.index(client)
             clients.remove(client)
             client.close()
             nickname = nicknames[index]
-            broadcast(f"{nickname} has left the chat")
+            # broadcast(f"{nickname} has left the chat")
             nicknames.remove(nickname)
             break
 

@@ -2,18 +2,30 @@ package com.example.OOP_Project.ClientHandler;
 
 import java.io.*;
 import java.net.*;
+import java.util.Map;
 
 public class SocketClient {
     private Socket socket;
-    private BufferedReader reader;
-    private BufferedWriter writer;
-    private String nickname;
+    private DataInputStream din;
+    private DataOutputStream dout;
+    private String nickname = getComputerName();
+
+    private String getComputerName() {
+        Map<String, String> env = System.getenv();
+        if (env.containsKey("COMPUTERNAME"))
+            return env.get("COMPUTERNAME");
+        else if (env.containsKey("HOSTNAME"))
+            return env.get("HOSTNAME");
+        else
+            return "Unknown";
+    }
 
     public SocketClient(Socket socket) {
         try {
             this.socket = socket;
-            this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.din = new DataInputStream(socket.getInputStream());
+            this.dout = new DataOutputStream(socket.getOutputStream());
+            receiveMessageFromServer();
         } catch (IOException e) {
             System.out.println("Error creating client");
             e.printStackTrace();
@@ -22,27 +34,13 @@ public class SocketClient {
 
     }
 
-    // private void setNickname() throws IOException {
-    // // this.nickname =
-    // // while (true) {
-    // // System.out.print("Your name: ");
-    // // newNickname = reader.readLine();
-    // // if (newNickname.indexOf(":") >= 0) {
-    // // System.out.println("Name must not contain ':'");
-    // // continue;
-    // // }
-    // // nickname = newNickname;
-    // // break;
-    // // }
-    // }
-
     public void close() {
         try {
-            if (reader != null) {
-                reader.close();
+            if (din != null) {
+                din.close();
             }
-            if (writer != null) {
-                writer.close();
+            if (dout != null) {
+                dout.close();
             }
             if (socket != null) {
                 socket.close();
@@ -54,9 +52,8 @@ public class SocketClient {
 
     public void sendMessageToServer(String messageToServer) {
         try {
-            writer.write(messageToServer);
-            writer.newLine();
-            writer.flush();
+            dout.writeUTF(messageToServer);
+            dout.flush();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error sending message to server");
@@ -70,7 +67,7 @@ public class SocketClient {
             public void run() {
                 while (socket.isConnected()) {
                     try {
-                        String messageFromServer = reader.readLine();
+                        String messageFromServer = din.readUTF();
                         if (messageFromServer.equals("-nick")) {
                             sendMessageToServer(nickname);
                         } else {
