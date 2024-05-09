@@ -1,6 +1,5 @@
 package com.example.OOP_Project;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,10 +15,11 @@ public class App extends Application {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
         launch(args);
     }
