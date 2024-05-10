@@ -47,7 +47,6 @@ public class TodayController {
         String searchText = input.getText();
         System.out.println("Từ khóa tìm kiếm: " + searchText);
         client.sendMessageToServer(searchText);
-        System.out.println("Handle Done");
     }
 
     @FXML
@@ -75,6 +74,12 @@ public class TodayController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void getSearchResultFromServer(String serverMessage) {
+        // serverMessage: "Title 1%Type 1"News 1", "Summary 1", "Category 1", "Tag 1"
+        System.out.println("Receive message from serevr!");
+        System.out.println("Receive " + serverMessage);
     }
 
     public String debug() {

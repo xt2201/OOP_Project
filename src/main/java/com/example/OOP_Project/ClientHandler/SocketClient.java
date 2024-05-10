@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 import java.util.Map;
 
+import com.example.OOP_Project.Controller.TodayController;
+
 public class SocketClient {
     private Socket socket;
     private DataInputStream din;
@@ -71,7 +73,7 @@ public class SocketClient {
                         if (messageFromServer.equals("-nick")) {
                             sendMessageToServer(nickname);
                         } else {
-                            System.out.println(messageFromServer);
+                            TodayController.getSearchResultFromServer(messageFromServer);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

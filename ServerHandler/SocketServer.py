@@ -49,6 +49,11 @@ def receive_message(client: Socket) -> str:
     return msg
 
 
+def returnSearchResult(msg):
+
+    pass
+
+
 def handle(client: Socket):
     while True:
         index = clients.index(client)
