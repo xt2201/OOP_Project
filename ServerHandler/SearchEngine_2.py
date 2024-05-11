@@ -4,10 +4,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
+DataFrame = pd.DataFrame
+
 
 class SearchEngine:
-    def __init__(self, data_path):
-        self.data = pd.read_csv(data_path)
+
+    def __init__(self, database: DataFrame):
+        self.data = database
         self.model = SentenceTransformer("paraphrase-MiniLM-L6-v2")
         self.tfidf_vectorizer = TfidfVectorizer()
         self.tfidf_matrix = self._calculate_tfidf_matrix()
@@ -38,13 +41,15 @@ class SearchEngine:
 
 if __name__ == "__main__":
     # Load data from CSV file
-    data_path = "./database.csv"
+    data_path = "./Database/database.csv"
+    database = pd.read_csv("./Database/database.csv")
 
     # Create search engine instance
-    search_engine = SearchEngine(data_path)
+    search_engine = SearchEngine(database)
 
     # Perform search
     query = "New York crypto news"
     results = search_engine.search(query)
     for idx, text, similarity in results:
-        print(f"ID: {idx}, Similarity: {similarity:.4f}, Text: {text}")
+        # print(f"ID: {idx}, Similarity: {similarity:.4f}, Text: {text}")
+        print(database.iloc[idx].to_dict())

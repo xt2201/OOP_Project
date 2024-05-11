@@ -3,6 +3,7 @@ module com.example.demo {
     requires javafx.fxml;
     requires java.logging;
     requires java.desktop;
+    requires json.simple;
 //    requires de.jensd.fx.glyphs.fontawesome;
 
     opens com.example.OOP_Project to javafx.fxml;
