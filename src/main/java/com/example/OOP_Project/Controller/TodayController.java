@@ -8,9 +8,23 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,30 +33,11 @@ import java.util.ArrayList;
 import com.example.OOP_Project.ClientHandler.SocketClient;
 // Articles
 import com.example.OOP_Project.Media.NewsArticle;
-
+// Data 
+import com.example.OOP_Project.Controller.DataController;
 public class TodayController {
-    private static String[][] news_inputs = {
-            { "Title 1", "Type 1", "News 1", "Summary 1", "Category 1", "Tag 1", "Time 1", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 2", "Type 2", "News 2", "Summary 2", "Category 2", "Tag 2", "Time 2", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 3", "Type 3", "News 3", "Summary 3", "Category 3", "Tag 3", "Time 3", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 4", "Type 4", "News 4", "Summary 4", "Category 4", "Tag 4", "Time 4", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 5", "Type 5", "News 5", "Summary 5", "Category 5", "Tag 5", "Time 5", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 6", "Type 6", "News 6", "Summary 6", "Category 6", "Tag 6", "Time 6", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 7", "Type 7", "News 7", "Summary 7", "Category 7", "Tag 7", "Time 7", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 8", "Type 8", "News 8", "Summary 8", "Category 8", "Tag 8", "Time 8", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 9", "Type 9", "News 9", "Summary 9", "Category 9", "Tag 9", "Time 9", "https://www.facebook.com/",
-                    "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
-            { "Title 10", "Type 10", "News 10", "Summary 10", "Category 10", "Tag 10", "Time 10",
-                    "https://www.facebook.com/", "https://www.w3schools.com/images/w3schools_logo_436_2.png" }
-    };
+    private static String[][] news_inputs = DataController.getInput();
+    private static Boolean[] news_later = DataController.getlater();
     @FXML
     private TextField input;
 
@@ -60,20 +55,14 @@ public class TodayController {
     @FXML
     private VBox articleContainer;
 
-    @FXML
-    private VBox laterContainer;
 
     // Client
     private SocketClient client;
 
     public void initialize() {
-        if (articleContainer != null) {
+      
             addArticles();
-            debug_fetch();
-        }
-        if (laterContainer != null) {
-            addreadlater();
-        }
+
         try {
             client = new SocketClient(new Socket("127.0.0.1", 8888));
         } catch (IOException e) {
@@ -91,24 +80,31 @@ public class TodayController {
 
     public static void addSearchResult(int pos, String jsonString) {
         NewsArticle article = new NewsArticle(jsonString);
-        news_inputs[pos] = article.toArray();
-        System.out.println("Article added at " + pos);
+        
+        DataController.setInput(article.toArray(), pos);
+        System.out.println(article.toArray()[0]);    
+        
+        System.out.println("Article added at dit con me may " + pos);
     }
+
+    
 
     public String debug() {
         return "Hello";
     }
 
-    public static ArrayList<Article> articles = new ArrayList<>();
+    
 
     public void refreshArticles() {
         articleContainer.getChildren().clear();
         addArticles();
     }
 
+
     public void addArticles() {
-        articles.clear();
+        
         for (int i = 0; i < news_inputs.length; i++) {
+            int num = i;
             Article article = new Article();
             AnchorPane art = article.createArticle(news_inputs[i][0], news_inputs[i][1], news_inputs[i][2],
                     news_inputs[i][3],
@@ -143,65 +139,76 @@ public class TodayController {
                         news_inputs[finalI][3], news_inputs[finalI][4], news_inputs[finalI][5],
                         news_inputs[finalI][6], news_inputs[finalI][7], news_inputs[finalI][8]);
             });
+        Pane checkReadLaterPane = new Pane();
+        checkReadLaterPane.setLayoutX(0);
+        checkReadLaterPane.setLayoutY(130);
+        checkReadLaterPane.setPrefSize(200, 50);
+        URL tick = getClass().getResource("/image/tick.png");
+        Image laterImage = new Image(tick.toExternalForm());
+        ImageView tickImageView = new ImageView(laterImage);
+        tickImageView.setLayoutX(5);
+        tickImageView.setLayoutY(10);
+        tickImageView.setFitWidth(35);
+        tickImageView.setFitHeight(35);
 
-            art.getChildren().add(moreButton);
+        Label viewInReadLaterLabel = new Label("View in Read Later");
+        viewInReadLaterLabel.setLayoutX(44);
+        viewInReadLaterLabel.setLayoutY(19);
+        viewInReadLaterLabel.setTextFill(Color.rgb(242, 117, 117));
+        viewInReadLaterLabel.setFont(Font.font("System Italic", 11));
+
+
+        Button laterButton = new Button();
+        laterButton.setLayoutX(539);
+        laterButton.setLayoutY(13);
+        laterButton.setPrefSize(40, 50);
+        laterButton.setStyle("-fx-background-color: #020023;");
+        URL imageUr = getClass().getResource("/image/later.png");
+
+            Image aterImag = new Image(imageUr.toExternalForm());
+            ImageView laterImageView = new ImageView(aterImag);
+        laterImageView.setFitWidth(40);
+        laterImageView.setFitHeight(50);
+        laterButton.setGraphic(laterImageView);
+        ColorAdjust colorAdjus = new ColorAdjust();
+        colorAdjus.setBrightness(1.0);
+        colorAdjus.setContrast(0.06);
+        laterImageView.setEffect(colorAdjus);        
+        laterButton.setOnAction(event -> {
+            
+            if (DataController.debug(num) == "1") {
+                DataController.setReadLater(num, "2");
+                System.out.println(DataController.debug(num));
+            } else {
+                DataController.setReadLater(num, "1");
+                System.out.println(DataController.debug(num));
+            };
+            DataController.setlater(num);
+            checkReadLaterPane.setVisible(DataController.getlater()[num]);
+
+        });
+        
+        checkReadLaterPane.getChildren().addAll(tickImageView, viewInReadLaterLabel);
+        checkReadLaterPane.setVisible(DataController.getlater()[num]);
+        
+
+
+
+            art.getChildren().addAll(moreButton, checkReadLaterPane, laterButton);
             articleContainer.getChildren().add(art);
-            articles.add(article);
+            
 
         }
-        System.out.println(articles.size());
+        
     }
 
-    public void addreadlater() {
-        int i = 0;
-        for (Article article : articles) {
-            if (article.getPane() == true) {
-                AnchorPane art = article.getAnchorPane(news_inputs[i][0], news_inputs[i][1], news_inputs[i][2],
-                        news_inputs[i][3],
-                        news_inputs[i][4]);
-
-                Button moreButton = new Button();
-                moreButton.setLayoutX(593);
-                moreButton.setLayoutY(3);
-                moreButton.setPrefSize(50, 47);
-                moreButton.setStyle("-fx-background-color: #020023;");
-                URL imageUrl = TodayController.class.getResource("/image/more.png");
-
-                Image aterImage = new Image(imageUrl.toExternalForm());
-                ImageView moreImageView = new ImageView(aterImage);
-
-                moreImageView.setFitWidth(41);
-                moreImageView.setFitHeight(29);
-                ColorAdjust colorAdjust = new ColorAdjust();
-                colorAdjust.setBrightness(1.0);
-                colorAdjust.setContrast(-0.05);
-                colorAdjust.setSaturation(0.04);
-                moreImageView.setEffect(colorAdjust);
-
-                moreButton.setGraphic(moreImageView);
-
-                int finalI = i; // Variable 'i' needs to be effectively final or be effectively used as a final
-                                // variable
-                moreButton.setOnAction(event -> {
-
-                    setPane(news_inputs[finalI][0], news_inputs[finalI][1], news_inputs[finalI][2],
-                            news_inputs[finalI][3], news_inputs[finalI][4], news_inputs[finalI][5],
-                            news_inputs[finalI][6], news_inputs[finalI][7], news_inputs[finalI][8]);
-                });
-                art.getChildren().add(moreButton);
-                laterContainer.getChildren().add(art);
-            }
-            i++;
-        }
+    public static Boolean transpose(Boolean init) {
+        return !init; // Trả về giá trị mới của biến init (readlater)
     }
 
-    public void debug_fetch() {
-        for (int i = 0; i < 10; i++) {
-            Label label = new Label("Fetch " + i);
-            label.setTextFill(javafx.scene.paint.Color.WHITE);
-            articleContainer.getChildren().add(label);
-        }
-    }
+
+
+
 
     public void setPane(String title, String type, String news, String summary, String category, String tag,
             String time, String facebookLink, String imageLink) {

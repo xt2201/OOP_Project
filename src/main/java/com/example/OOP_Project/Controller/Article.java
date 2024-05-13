@@ -59,12 +59,16 @@ public class Article {
         typeLabel.setLayoutY(65);
         typeLabel.setTextFill(Color.rgb(209, 61, 145));
         typeLabel.setFont(Font.font(13));
+        typeLabel.setWrapText(true);
+        typeLabel.setPrefSize(250, 20);
 
         Label newsLabel = new Label(_news);
-        newsLabel.setLayoutX(471);
+        newsLabel.setLayoutX(480);
         newsLabel.setLayoutY(65);
         newsLabel.setTextFill(Color.rgb(134, 50, 189));
         newsLabel.setFont(Font.font("System Bold", 13));
+        newsLabel.setWrapText(true);
+        newsLabel.setPrefSize(110, 20);
 
         Label summaryLabel = new Label(_summary);
         summaryLabel.setLayoutX(218);
@@ -117,11 +121,11 @@ public class Article {
         colorAdjust.setContrast(0.06);
         laterImageView.setEffect(colorAdjust);
         laterButton.setOnAction(event -> {
-            setPane(!read_later);
+            setsPane(!read_later);
             checkReadLaterPane.setVisible(read_later);
         });
 
-        pane2.getChildren().addAll(linkImageView, titleLabel, typeLabel, newsLabel, summaryLabel, checkReadLaterPane, moreLabel, laterButton);
+        pane2.getChildren().addAll(linkImageView, titleLabel, typeLabel, newsLabel, summaryLabel, moreLabel);
         checkReadLaterPane.getChildren().addAll(tickImageView, viewInReadLaterLabel);
         checkReadLaterPane.setVisible(read_later);
         pane1.getChildren().addAll(pane2);
@@ -132,7 +136,7 @@ public class Article {
     public boolean getPane() {
         return read_later;
     }
-    public void setPane(Boolean init) {
+    public void setsPane(Boolean init) {
         this.read_later = init;
     }
     public AnchorPane getAnchorPane(String title, String type, String news, String summary, String link) {
