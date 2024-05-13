@@ -139,9 +139,9 @@ public class TodayController {
                             // variable
             moreButton.setOnAction(event -> {
 
-                setPane(news_inputs[finalI][0], news_inputs[finalI][1], news_inputs[finalI][2], news_inputs[finalI][3],
-                        news_inputs[finalI][4],
-                        news_inputs[finalI][5], news_inputs[finalI][6], news_inputs[finalI][7], news_inputs[finalI][8]);
+                setPane(news_inputs[finalI][0], news_inputs[finalI][1], news_inputs[finalI][2],
+                        news_inputs[finalI][3], news_inputs[finalI][4], news_inputs[finalI][5],
+                        news_inputs[finalI][6], news_inputs[finalI][7], news_inputs[finalI][8]);
             });
 
             art.getChildren().add(moreButton);
@@ -153,7 +153,6 @@ public class TodayController {
     }
 
     public void addreadlater() {
-
         int i = 0;
         for (Article article : articles) {
             if (article.getPane() == true) {
@@ -186,10 +185,8 @@ public class TodayController {
                 moreButton.setOnAction(event -> {
 
                     setPane(news_inputs[finalI][0], news_inputs[finalI][1], news_inputs[finalI][2],
-                            news_inputs[finalI][3],
-                            news_inputs[finalI][4], news_inputs[finalI][5], news_inputs[finalI][6],
-                            news_inputs[finalI][7],
-                            news_inputs[finalI][8]);
+                            news_inputs[finalI][3], news_inputs[finalI][4], news_inputs[finalI][5],
+                            news_inputs[finalI][6], news_inputs[finalI][7], news_inputs[finalI][8]);
                 });
                 art.getChildren().add(moreButton);
                 laterContainer.getChildren().add(art);
