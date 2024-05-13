@@ -77,7 +77,7 @@ class SocketServer:
         self.SE = SearchEngine(self.database)
 
     def get_search_result(self, query: str):
-        results = self.SE.search(query)
+        results = self.SE.search(query, 10)
         search_items = [
             json.dumps(self.database.iloc[idx].to_dict()) for idx, _, _ in results
         ]
@@ -92,11 +92,11 @@ class SocketServer:
                 client_input = message[message.find(":") + 1 :].strip()
                 print(f"{nickname}: {client_input}")
                 search_results = self.get_search_result(client_input)
-                send_message(client, "Searching Done")
-                for item in search_results:
-                    print(item)
-                    send_message(client, item)
-                    break
+                # Return search result
+                send_message(client, f"-result {len(search_results)}")
+                for i, item in enumerate(search_results):
+                    send_message(client, f"-news {i} {item}")
+                send_message(client, "-refresh")
             except Exception as e:
                 print(e)
                 self.clients.remove(client)

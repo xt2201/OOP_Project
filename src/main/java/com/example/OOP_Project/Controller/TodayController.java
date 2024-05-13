@@ -15,10 +15,13 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 
+// Client socket
 import com.example.OOP_Project.ClientHandler.SocketClient;
+// Articles
+import com.example.OOP_Project.Media.NewsArticle;
 
 public class TodayController {
-    String[][] inputs = {
+    private static String[][] news_inputs = {
             { "Title 1", "Type 1", "News 1", "Summary 1", "Category 1", "Tag 1", "Time 1", "https://www.facebook.com/",
                     "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
             { "Title 2", "Type 2", "News 2", "Summary 2", "Category 2", "Tag 2", "Time 2", "https://www.facebook.com/",
@@ -46,7 +49,9 @@ public class TodayController {
     public void handleSearch() {
         String searchText = input.getText();
         System.out.println("Từ khóa tìm kiếm: " + searchText);
+        articleContainer.getChildren().clear();
         client.sendMessageToServer(searchText);
+        addArticles();
     }
 
     @FXML
@@ -76,10 +81,18 @@ public class TodayController {
         }
     }
 
-    public static void getSearchResultFromServer(String serverMessage) {
-        // serverMessage: "Title 1%Type 1"News 1", "Summary 1", "Category 1", "Tag 1"
-        System.out.println("Receive message from serevr!");
-        System.out.println("Receive " + serverMessage);
+    // Handle search
+    // public static void newInputs
+
+    public static void setNewsInputs(int size) {
+        news_inputs = new String[9][size];
+        System.out.println("Inputs reseted");
+    }
+
+    public static void addSearchResult(int pos, String jsonString) {
+        NewsArticle article = new NewsArticle(jsonString);
+        news_inputs[pos] = article.toArray();
+        System.out.println("Article added at " + pos);
     }
 
     public String debug() {
@@ -95,10 +108,11 @@ public class TodayController {
 
     public void addArticles() {
         articles.clear();
-        for (int i = 0; i < inputs.length; i++) {
+        for (int i = 0; i < news_inputs.length; i++) {
             Article article = new Article();
-            AnchorPane art = article.createArticle(inputs[i][0], inputs[i][1], inputs[i][2], inputs[i][3],
-                    inputs[i][4]);
+            AnchorPane art = article.createArticle(news_inputs[i][0], news_inputs[i][1], news_inputs[i][2],
+                    news_inputs[i][3],
+                    news_inputs[i][4]);
 
             Button moreButton = new Button();
             moreButton.setLayoutX(600);
@@ -106,7 +120,7 @@ public class TodayController {
             moreButton.setPrefSize(50, 40);
             moreButton.setStyle("-fx-background-color: #020023;");
 
-            URL imageUrl = getClass().getResource("/image/more.png");
+            URL imageUrl = TodayController.class.getResource("/image/more.png");
 
             Image aterImage = new Image(imageUrl.toExternalForm());
             ImageView moreImageView = new ImageView(aterImage);
@@ -125,8 +139,9 @@ public class TodayController {
                             // variable
             moreButton.setOnAction(event -> {
 
-                setPane(inputs[finalI][0], inputs[finalI][1], inputs[finalI][2], inputs[finalI][3], inputs[finalI][4],
-                        inputs[finalI][5], inputs[finalI][6], inputs[finalI][7], inputs[finalI][8]);
+                setPane(news_inputs[finalI][0], news_inputs[finalI][1], news_inputs[finalI][2], news_inputs[finalI][3],
+                        news_inputs[finalI][4],
+                        news_inputs[finalI][5], news_inputs[finalI][6], news_inputs[finalI][7], news_inputs[finalI][8]);
             });
 
             art.getChildren().add(moreButton);
@@ -142,15 +157,16 @@ public class TodayController {
         int i = 0;
         for (Article article : articles) {
             if (article.getPane() == true) {
-                AnchorPane art = article.getAnchorPane(inputs[i][0], inputs[i][1], inputs[i][2], inputs[i][3],
-                        inputs[i][4]);
+                AnchorPane art = article.getAnchorPane(news_inputs[i][0], news_inputs[i][1], news_inputs[i][2],
+                        news_inputs[i][3],
+                        news_inputs[i][4]);
 
                 Button moreButton = new Button();
                 moreButton.setLayoutX(593);
                 moreButton.setLayoutY(3);
                 moreButton.setPrefSize(50, 47);
                 moreButton.setStyle("-fx-background-color: #020023;");
-                URL imageUrl = getClass().getResource("/image/more.png");
+                URL imageUrl = TodayController.class.getResource("/image/more.png");
 
                 Image aterImage = new Image(imageUrl.toExternalForm());
                 ImageView moreImageView = new ImageView(aterImage);
@@ -169,9 +185,11 @@ public class TodayController {
                                 // variable
                 moreButton.setOnAction(event -> {
 
-                    setPane(inputs[finalI][0], inputs[finalI][1], inputs[finalI][2], inputs[finalI][3],
-                            inputs[finalI][4], inputs[finalI][5], inputs[finalI][6], inputs[finalI][7],
-                            inputs[finalI][8]);
+                    setPane(news_inputs[finalI][0], news_inputs[finalI][1], news_inputs[finalI][2],
+                            news_inputs[finalI][3],
+                            news_inputs[finalI][4], news_inputs[finalI][5], news_inputs[finalI][6],
+                            news_inputs[finalI][7],
+                            news_inputs[finalI][8]);
                 });
                 art.getChildren().add(moreButton);
                 laterContainer.getChildren().add(art);

@@ -72,8 +72,18 @@ public class SocketClient {
                         String messageFromServer = din.readUTF();
                         if (messageFromServer.equals("-nick")) {
                             sendMessageToServer(nickname);
-                        } else {
-                            TodayController.getSearchResultFromServer(messageFromServer);
+                        } else if (messageFromServer.indexOf("-result") == 0) {
+                            int num_results = Integer
+                                    .parseInt(messageFromServer.substring(messageFromServer.indexOf(" ") + 1));
+                            System.out.println("Found " + num_results);
+                        } else if (messageFromServer.indexOf("-news") == 0) {
+                            int s1 = messageFromServer.indexOf(" ");
+                            int s2 = messageFromServer.indexOf(" ", s1 + 1);
+                            int pos = Integer.parseInt(messageFromServer.substring(s1 + 1, s2));
+                            String jsonString = messageFromServer.substring(s2 + 1);
+                            TodayController.addSearchResult(pos, jsonString);
+                        } else if (messageFromServer.indexOf("-refresh") == 0) {
+                            // TodayController.refreshArticles();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -84,6 +94,7 @@ public class SocketClient {
                 }
             }
         }).start();
+
     }
 
     public static void main(String[] args) {
