@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 public class DataController {
     private static String[][] inputs = {
         { "Title 1", "Type 11111111111111111111111 1", "News 11111111111111111111111", "Summary 1", "Category 1", "Tag 1", "Time 1", "https://www.facebook.com/",
@@ -38,9 +39,45 @@ public class DataController {
         { "Title 10", "Type 10", "News 10", "Summary 10", "Category 10", "Tag 10", "Time 10",
                 "https://www.facebook.com/", "https://www.w3schools.com/images/w3schools_logo_436_2.png" , "1"}
 };
+private static ArrayList<String[]> Later = new ArrayList<>();
+public static boolean containsStringArray(String[] arrayToCheck) {
+    for (String[] array : Later) {
+        if (Arrays.equals(array, arrayToCheck)) {
+            return true;
+        }
+    }
+    return false;
+}
+static String[] init =  {"Welcome to our ReadLater Page", "This is the instruction", "", "Instructionssssss", "Category 1", "Tag 1", "Time 1", "Link 1", "Image Link 1", "1"};
+public static void addToLater(String[] newItem) {
+        Later.add(newItem); 
+    }
+public static void removeFromLater(String title) {
+        
+        for (int i = 0; i < Later.size(); i++) {
+            String[] item = Later.get(i);
+            // Kiểm tra nếu title của item trùng với title cần xóa
+            if (item[0].equals(title)) {
+                Later.remove(i); // Xóa phần tử từ Later
+                return;
+            }
+        }
+        System.out.println("Item with title '" + title + "' not found in Later.");
+    }
+
+public static ArrayList<String[]> getRead() {
+        return DataController.Later;
+}
+public static void initialRead() {
+        Later.add(init); 
+}
 public static String[][] getInput() {
     return DataController.inputs;
 }
+public static String[] getItem(int pos) {
+        return DataController.inputs[pos];
+    }
+
 public static void setInput(String[] new_inputs,int pos) {
         DataController.inputs[pos] = new_inputs;
 }
@@ -52,14 +89,7 @@ public static String debug(int pos) {
 }
 
 
-private static Boolean[] later = {false,false,false,false,false,false,false,false,false,false};
 
-public static Boolean[] getlater() {
-    return DataController.later;
-}
-public static void setlater(int pos) {
-    DataController.later[pos] = !DataController.later[pos];
-}
 
 
 }

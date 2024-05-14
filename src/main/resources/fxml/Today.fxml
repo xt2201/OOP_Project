@@ -85,7 +85,9 @@
             </font>
          </Label>
          <Button layoutX="850.0" layoutY="323.0" mnemonicParsing="false" onAction="#handleSearch" text="Search" />
-         <Label layoutX="14.0" layoutY="133.0" text="Fetch" textFill="WHITE" />
+         <Button fx:id="handleSearch_1" layoutX="44.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleSearch_1" text="BlockChain" />
+         <Button fx:id="handleSearch_2" layoutX="44.0" layoutY="294.0" mnemonicParsing="false" text="Jeff Bezos" />
+         <Button fx:id="handleSearch_3" layoutX="44.0" layoutY="336.0" mnemonicParsing="false" text="Elon Musk" />
       </Pane>
    </ScrollPane>
 

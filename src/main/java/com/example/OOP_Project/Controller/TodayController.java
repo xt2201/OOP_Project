@@ -37,12 +37,33 @@ import com.example.OOP_Project.Media.NewsArticle;
 import com.example.OOP_Project.Controller.DataController;
 public class TodayController {
     private static String[][] news_inputs = DataController.getInput();
-    private static Boolean[] news_later = DataController.getlater();
+    
     @FXML
     private TextField input;
 
     public void handleSearch() {
         String searchText = input.getText();
+        System.out.println("Từ khóa tìm kiếm: " + searchText);
+        articleContainer.getChildren().clear();
+        client.sendMessageToServer(searchText);
+        addArticles();
+    }
+    public void handleSearch_1() {
+        String searchText = "Blockchain";
+        System.out.println("Từ khóa tìm kiếm: " + searchText);
+        articleContainer.getChildren().clear();
+        client.sendMessageToServer(searchText);
+        addArticles();
+    }
+    public void handleSearch_2() {
+        String searchText = "Jeff Bezos";
+        System.out.println("Từ khóa tìm kiếm: " + searchText);
+        articleContainer.getChildren().clear();
+        client.sendMessageToServer(searchText);
+        addArticles();
+    }
+    public void handleSearch_3() {
+        String searchText = "Elon Musk";
         System.out.println("Từ khóa tìm kiếm: " + searchText);
         articleContainer.getChildren().clear();
         client.sendMessageToServer(searchText);
