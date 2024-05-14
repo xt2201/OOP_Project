@@ -10,5 +10,9 @@ module com.example.OOP_Project {
     opens com.example.OOP_Project.Controller to javafx.fxml;
     exports com.example.OOP_Project;
     exports com.example.OOP_Project.Controller;
+    exports com.example.OOP_Project.Controller.Visualization;
+    opens com.example.OOP_Project.Controller.Visualization to javafx.fxml;
+    exports com.example.OOP_Project.Controller.DataManagement;
+    opens com.example.OOP_Project.Controller.DataManagement to javafx.fxml;
 
 }

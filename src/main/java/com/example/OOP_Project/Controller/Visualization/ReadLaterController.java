@@ -1,6 +1,10 @@
-package com.example.OOP_Project.Controller;
+package com.example.OOP_Project.Controller.Visualization;
 
 import java.util.ArrayList;
+
+import com.example.OOP_Project.Controller.DataManagement.DataController;
+import com.example.OOP_Project.Controller.DataManagement.DetailController;
+import com.example.OOP_Project.Controller.DataManagement.Display;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 

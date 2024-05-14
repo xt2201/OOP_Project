@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="today" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #020013;" stylesheets="@../style/today.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.OOP_Project.Controller.TodayController">
+<AnchorPane fx:id="today" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #020013;" stylesheets="@../style/today.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.OOP_Project.Controller.Visualization.TodayController">
    <ScrollPane hbarPolicy="NEVER" prefHeight="700.0" prefWidth="1000.0" vbarPolicy="NEVER">
       <Pane prefWidth="1000.0" style="-fx-background-color: #020013;">
          <Label layoutX="439.0" layoutY="126.0" style="-fx-color: white;" styleClass="intro" text="Introducing">

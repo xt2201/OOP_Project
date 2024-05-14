@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Map;
 
-import com.example.OOP_Project.Controller.TodayController;
+import com.example.OOP_Project.Controller.Visualization.TodayController;
 
 public class SocketClient {
     private Socket socket;

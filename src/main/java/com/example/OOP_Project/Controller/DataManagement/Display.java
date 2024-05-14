@@ -1,8 +1,9 @@
-package com.example.OOP_Project.Controller;
+package com.example.OOP_Project.Controller.DataManagement;
 
 import java.net.URL;
 import java.util.ArrayList;
 
+import com.example.OOP_Project.Controller.Visualization.TodayController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
