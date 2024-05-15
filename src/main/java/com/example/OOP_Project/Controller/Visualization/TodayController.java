@@ -15,10 +15,10 @@ import com.example.OOP_Project.ClientHandler.SocketClient;
 // Articles
 import com.example.OOP_Project.Media.NewsArticle;
 
-public class TodayController extends Display implements DataController{
+public class TodayController extends Display {
     private static String[][] news_inputs = DataController.getInput();
     public void addArticles() {
-        addArticles(news_inputs, articleContainer,new String[]{"2", "1"});
+        addArticles(news_inputs, articleContainer);
     }
     
     @FXML

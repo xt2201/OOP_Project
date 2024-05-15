@@ -20,7 +20,7 @@ public abstract class Display extends Article {
     @FXML
     public DetailController detailController;
     
-    public void addArticles(ArrayList<String[]> news_inputs, VBox articleContainer, String[] display) {
+    public void addArticles(ArrayList<String[]> news_inputs, VBox articleContainer) {
         
         for (int i = 0; i < news_inputs.size(); i++) {
             int num = i;
@@ -97,7 +97,7 @@ public abstract class Display extends Article {
         }
         
     
-        public void addArticles(String[][] news_inputs, VBox articleContainer, String[] display) {
+        public void addArticles(String[][] news_inputs, VBox articleContainer) {
         
         for (int i = 0; i < news_inputs.length; i++) {
             
