@@ -15,8 +15,11 @@ import com.example.OOP_Project.ClientHandler.SocketClient;
 // Articles
 import com.example.OOP_Project.Media.NewsArticle;
 
-public class TodayController {
+public class TodayController extends Display {
     private static String[][] news_inputs = DataController.getInput();
+    public void addArticles() {
+        addArticles(news_inputs, articleContainer,new String[]{"2", "1"});
+    }
     
     @FXML
     private TextField input;
@@ -88,7 +91,5 @@ public class TodayController {
         articleContainer.getChildren().clear();
         addArticles();
     }
-    public void addArticles() {
-        Display.addArticles(news_inputs, articleContainer,new String[]{"2", "1"});
-    }
+
 }

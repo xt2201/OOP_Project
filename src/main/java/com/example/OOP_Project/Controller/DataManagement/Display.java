@@ -16,11 +16,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class Display {
+public abstract class Display {
     @FXML
-    public static DetailController detailController;
+    public DetailController detailController;
     
-    public static void addArticles(ArrayList<String[]> news_inputs, VBox articleContainer, String[] display) {
+    public void addArticles(ArrayList<String[]> news_inputs, VBox articleContainer, String[] display) {
         
         for (int i = 0; i < news_inputs.size(); i++) {
             int num = i;
@@ -97,7 +97,7 @@ public class Display {
         }
         
     
-        public static void addArticles(String[][] news_inputs, VBox articleContainer, String[] display) {
+        public void addArticles(String[][] news_inputs, VBox articleContainer, String[] display) {
         
         for (int i = 0; i < news_inputs.length; i++) {
             
@@ -204,7 +204,7 @@ public class Display {
         
     }
 
-    public static Boolean transpose(Boolean init) {
+    public Boolean transpose(Boolean init) {
         return !init; // Trả về giá trị mới của biến init (readlater)
     }
 
@@ -212,7 +212,7 @@ public class Display {
 
 
 
-    public static void setPane(String title, String type, String news, String summary, String category, String tag,
+    public  void setPane(String title, String type, String news, String summary, String category, String tag,
             String time, String facebookLink, String imageLink) {
         detailController.showDetail();
         detailController.setDetail(title, type, news, summary, category, tag, time, facebookLink, imageLink);
