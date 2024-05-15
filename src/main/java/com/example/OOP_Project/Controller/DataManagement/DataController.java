@@ -3,8 +3,8 @@ package com.example.OOP_Project.Controller.DataManagement;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-public class DataController {
-    private static String[][] inputs = {
+public interface DataController {
+    static String[][] inputs = {
         { "Title 1", "Type 11111111111111111111111 1", "News 11111111111111111111111", "Summary 1", "Category 1", "Tag 1", "Time 1", "https://www.facebook.com/",
                 "https://www.w3schools.com/images/w3schools_logo_436_2.png" },
         { "Title 2", "Type 2", "News 2", "Summary 2", "Category 2", "Tag 2", "Time 2", "https://www.facebook.com/",
@@ -26,7 +26,7 @@ public class DataController {
         { "Title 10", "Type 10", "News 10", "Summary 10", "Category 10", "Tag 10", "Time 10",
                 "https://www.facebook.com/", "https://www.w3schools.com/images/w3schools_logo_436_2.png"}
 };
-private static ArrayList<String[]> Later = new ArrayList<>();
+static ArrayList<String[]> Later = new ArrayList<>();
 public static boolean containsStringArray(String[] arrayToCheck) {
     for (String[] array : Later) {
         if (Arrays.equals(array, arrayToCheck)) {

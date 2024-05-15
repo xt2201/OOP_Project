@@ -15,7 +15,7 @@ import com.example.OOP_Project.ClientHandler.SocketClient;
 // Articles
 import com.example.OOP_Project.Media.NewsArticle;
 
-public class TodayController extends Display {
+public class TodayController extends Display implements DataController{
     private static String[][] news_inputs = DataController.getInput();
     public void addArticles() {
         addArticles(news_inputs, articleContainer,new String[]{"2", "1"});
@@ -53,8 +53,7 @@ public class TodayController extends Display {
         addArticles();
     }
 
-    @FXML
-    private DetailController detailController;
+
 
     @FXML
     private VBox articleContainer;

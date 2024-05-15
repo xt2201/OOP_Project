@@ -139,9 +139,6 @@ public abstract class Article {
     public void setsPane(Boolean init) {
         this.read_later = init;
     }
-    public AnchorPane getAnchorPane(String title, String type, String news, String summary, String link) {
-        return createArticle(title, type, news, summary, link);
-    }
 
 
 }
