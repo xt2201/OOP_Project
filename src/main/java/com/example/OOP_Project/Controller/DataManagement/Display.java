@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public abstract class Display {
+public abstract class Display extends Article {
     @FXML
     public DetailController detailController;
     
@@ -24,9 +24,9 @@ public abstract class Display {
         
         for (int i = 0; i < news_inputs.size(); i++) {
             int num = i;
-            Article article = new Article();
             
-            AnchorPane art = article.createArticle(news_inputs.get(i)[0], news_inputs.get(i)[1], news_inputs.get(i)[2],
+            
+            AnchorPane art = createArticle(news_inputs.get(i)[0], news_inputs.get(i)[1], news_inputs.get(i)[2],
                     news_inputs.get(i)[3], news_inputs.get(i)[4]);
         
         
@@ -103,8 +103,8 @@ public abstract class Display {
             
             int num = i;
 
-            Article article = new Article();
-            AnchorPane art = article.createArticle(news_inputs[i][0], news_inputs[i][1], news_inputs[i][2],
+            
+            AnchorPane art = createArticle(news_inputs[i][0], news_inputs[i][1], news_inputs[i][2],
                     news_inputs[i][3],
                     news_inputs[i][4]);
 

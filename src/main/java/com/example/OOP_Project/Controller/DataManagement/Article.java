@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
 
 import java.net.URL;
 
-public class Article {
+public abstract class Article {
     private Pane checkReadLaterPane;
     private Boolean read_later = false;
     public AnchorPane createArticle(String _title, String _type, String _news, String _summary, String link) {
