@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="detail" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.OOP_Project.Controller.DetailController">
+            fx:controller="com.example.OOP_Project.Controller.DataManagement.DetailController">
 
         <Pane  prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: white; -fx-opacity: 0.4;" />
         <ScrollPane hbarPolicy="NEVER" layoutX="150.0" layoutY="150.0" prefHeight="400.0" prefWidth="700.0" vbarPolicy="NEVER">

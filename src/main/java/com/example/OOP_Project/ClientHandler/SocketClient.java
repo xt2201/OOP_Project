@@ -4,13 +4,22 @@ import java.io.*;
 import java.net.*;
 import java.util.Map;
 
-import com.example.OOP_Project.Controller.TodayController;
+import com.example.OOP_Project.Controller.Visualization.TodayController;
 
 public class SocketClient {
     private Socket socket;
     private DataInputStream din;
     private DataOutputStream dout;
     private String nickname = getComputerName();
+    private boolean refresh = false;
+
+    public void setRefreshStatus(boolean status) {
+        this.refresh = status;
+    }
+
+    public boolean getRefreshStatus() {
+        return this.refresh;
+    }
 
     private String getComputerName() {
         Map<String, String> env = System.getenv();
@@ -83,7 +92,8 @@ public class SocketClient {
                             String jsonString = messageFromServer.substring(s2 + 1);
                             TodayController.addSearchResult(pos, jsonString);
                         } else if (messageFromServer.indexOf("-refresh") == 0) {
-                            // TodayController.refreshArticles();
+                            setRefreshStatus(true);
+                            System.out.println("Refresh set: " + refresh);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

@@ -4,6 +4,8 @@ import pandas as pd
 from threading import Thread
 from SearchEngine_2 import SearchEngine
 
+import newsapi_top100 as api_caller
+
 # Typing
 Socket = socket.socket
 DataFrame = pd.DataFrame
@@ -48,6 +50,7 @@ class SocketServer:
         self.database: DataFrame
         # Search engine
         self.SE: SearchEngine
+        self.caller = api_caller
         # Socket
         self.server: Socket | None = None
         self.clients: list[Socket] = []
@@ -76,12 +79,33 @@ class SocketServer:
         print(f"Database loaded from {path}")
         self.SE = SearchEngine(self.database)
 
-    def get_search_result(self, query: str):
+    def search(self, query: str):
         results = self.SE.search(query, 10)
         search_items = [
-            json.dumps(self.database.iloc[idx].to_dict()) for idx, _, _ in results
+            json.dumps(
+                self.database.iloc[idx].fillna("null").to_dict(), allow_nan=False
+            )
+            for idx, _, _ in results
         ]
+        print(self.database.iloc[2].fillna("null"))
         return search_items
+    
+    def call(self, query: str):
+        caller = api_caller.NewsCaller(query, sort_by = 'publishedAt', page_size = 10)
+        called_items = [
+            json.dumps(
+                caller.get_single_article_details(idx)
+            )
+            for idx in range (caller.page_size)
+        ]
+        return called_items
+               
+
+    def get_search_result(self, message: str):
+        if message[0] == "1":
+            return self.search(query = message[2:])
+        if message[0] == "2":
+            return self.call(query = message[2:])
 
     def _handle(self, client: Socket):
         while True:
@@ -92,6 +116,7 @@ class SocketServer:
                 client_input = message[message.find(":") + 1 :].strip()
                 print(f"{nickname}: {client_input}")
                 search_results = self.get_search_result(client_input)
+
                 # Return search result
                 send_message(client, f"-result {len(search_results)}")
                 for i, item in enumerate(search_results):
