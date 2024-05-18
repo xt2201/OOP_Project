@@ -89,23 +89,20 @@ class SocketServer:
         ]
         print(self.database.iloc[2].fillna("null"))
         return search_items
-    
+
     def call(self, query: str):
-        caller = api_caller.NewsCaller(query, sort_by = 'publishedAt', page_size = 10)
+        caller = api_caller.NewsCaller(query, sort_by="publishedAt", page_size=10)
         called_items = [
-            json.dumps(
-                caller.get_single_article_details(idx)
-            )
-            for idx in range (caller.page_size)
+            json.dumps(caller.get_single_article_details(idx))
+            for idx in range(caller.page_size)
         ]
         return called_items
-               
 
     def get_search_result(self, message: str):
         if message[0] == "1":
-            return self.search(query = message[2:])
+            return self.search(query=message[2:])
         if message[0] == "2":
-            return self.call(query = message[2:])
+            return self.call(query=message[2:])
 
     def _handle(self, client: Socket):
         while True:
