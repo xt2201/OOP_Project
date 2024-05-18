@@ -1,8 +1,9 @@
 import socket
+from threading import Thread
 import json
 import pandas as pd
-from threading import Thread
-from SearchEngine_2 import SearchEngine
+from NewsAPI import NewsCaller
+from SearchEngine import SearchEngine
 
 import newsapi_top100 as api_caller
 
@@ -18,14 +19,14 @@ ENCODING = "utf-8"
 MAX_CONNECTION = 5
 
 
-# Message handler
+# Encoding and decoding message
 def encode_message(msg: str) -> bytes:
     msg_length = len(msg).to_bytes(BUFFER_SIZE)
     bytes_msg = msg_length + msg.encode("utf-8")
     return bytes_msg
 
 
-def decode_message(bytes_msg: bytes):
+def decode_message(bytes_msg: bytes) -> str:
     msg = bytes_msg.decode(ENCODING)
     return msg
 
@@ -43,7 +44,7 @@ def receive_message(client: Socket) -> str:
     return msg
 
 
-class SocketServer:
+class SocketServer(Socket):
     def __init__(self) -> None:
         # Database
         self.database_path: str
@@ -51,25 +52,15 @@ class SocketServer:
         # Search engine
         self.SE: SearchEngine
         self.caller = api_caller
-        # Socket
-        self.server: Socket | None = None
+        # Socket clients
         self.clients: list[Socket] = []
         self.nicknames: list[str] = []
 
-    def close_server(self) -> None:
-        if self.server is not None:
-            try:
-                self.server.close()
-            except Exception:
-                print("Error while trying to close server")
-
-    def start_server(self, ip: str, port: int, max_connection=5) -> None:
-        self.close_server()
-        server = Socket(socket.AF_INET, socket.SOCK_STREAM)
-        server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
-        server.bind((ip, port))
-        server.listen(max_connection)
-        self.server = server
+    def start(self, ip: str, port: int, max_connection=5) -> None:
+        super().__init__(socket.AF_INET, socket.SOCK_STREAM)
+        self.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
+        self.bind((ip, port))
+        self.listen(max_connection)
         print(f"Server started at {ip} on port {port}")
         self._receive()
 
@@ -122,14 +113,14 @@ class SocketServer:
             except Exception as e:
                 print(e)
                 self.clients.remove(client)
-                client.close()
                 self.nicknames.remove(nickname)
+                client.close()
                 break
 
     def _receive(self):
         while True:
             # Accepting a client connection
-            client, address = self.server.accept()
+            client, address = self.accept()
             print(f"New connection from {address[0]}:{address[1]}")
 
             # Get client's nickname
@@ -147,4 +138,4 @@ class SocketServer:
 if __name__ == "__main__":
     server = SocketServer()
     server.set_database("./Database/database.csv")
-    server.start_server(IP, PORT)
+    server.start(IP, PORT)
