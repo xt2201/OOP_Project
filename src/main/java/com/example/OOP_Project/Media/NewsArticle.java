@@ -33,7 +33,6 @@ public class NewsArticle {
             link = (String) data.get("link");
             img_url = (String) data.get("image");
         } catch (Exception e) {
-
         }
     }
 

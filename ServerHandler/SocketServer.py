@@ -5,8 +5,6 @@ import pandas as pd
 from NewsAPI import NewsCaller
 from SearchEngine import SearchEngine
 
-import newsapi_top100 as api_caller
-
 # Typing
 Socket = socket.socket
 DataFrame = pd.DataFrame
@@ -51,7 +49,7 @@ class SocketServer(Socket):
         self.database: DataFrame
         # Search engine
         self.SE: SearchEngine
-        self.caller = api_caller
+        self.caller: NewsCaller
         # Socket clients
         self.clients: list[Socket] = []
         self.nicknames: list[str] = []
@@ -78,14 +76,14 @@ class SocketServer(Socket):
             )
             for idx, _, _ in results
         ]
-        print(self.database.iloc[2].fillna("null"))
         return search_items
 
     def call(self, query: str):
-        caller = api_caller.NewsCaller(query, sort_by="publishedAt", page_size=10)
+        page_size = 10
+        caller = NewsCaller(query, sort_by="publishedAt", page_size=page_size)
         called_items = [
             json.dumps(caller.get_single_article_details(idx))
-            for idx in range(caller.page_size)
+            for idx in range(page_size)
         ]
         return called_items
 
