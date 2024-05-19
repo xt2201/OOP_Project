@@ -1,1 +1,1 @@
-from .news_caller import NewsCaller
+from .NewsCaller import NewsCaller

@@ -45,11 +45,12 @@ def receive_message(client: Socket) -> str:
 class SocketServer(Socket):
     def __init__(self) -> None:
         # Database
-        self.database_path: str
-        self.database: DataFrame
+        self.database_path: str | None
+        self.database: DataFrame | None
         # Search engine
-        self.SE: SearchEngine
-        self.caller: NewsCaller
+        self.SE: SearchEngine | NewsCaller
+        # Search settings
+        self.page_size = 10
         # Socket clients
         self.clients: list[Socket] = []
         self.nicknames: list[str] = []
@@ -67,6 +68,9 @@ class SocketServer(Socket):
         self.database = pd.read_csv(path)
         print(f"Database loaded from {path}")
         self.SE = SearchEngine(self.database)
+    
+    def set_caller(self, sort_by="publishedAt"):
+        self.SE = 
 
     def search(self, query: str):
         results = self.SE.search(query, 10)

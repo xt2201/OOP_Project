@@ -1,4 +1,4 @@
-from news_caller import NewsCaller
+from ServerHandler.NewsAPI.NewsCaller import NewsCaller
 import csv
 import os
 
