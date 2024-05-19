@@ -2,7 +2,11 @@ import socket
 import json
 import pandas as pd
 from threading import Thread
-from SearchEngine_2 import SearchEngine
+from BlockchainDB import *
+from OOPEngine import SearchEngine
+from RetrieverPipeline import RetrieverPipeline
+from IndexPipeline import IndexPipeline
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 
 import newsapi_top100 as api_caller
 
@@ -76,16 +80,39 @@ class SocketServer:
     def set_database(self, path: str):
         self.database_path = path
         self.database = pd.read_csv(path)
+        self.SE_database = ExcelDB("Database/database.csv")
+        self.SE_database.process_data(20) ## number of considered articles
         print(f"Database loaded from {path}")
-        self.SE = SearchEngine(self.database)
+
+    def set_searchEngine(self):
+        index = IndexPipeline(
+            docEmbedderModel = "sentence-transformers/all-MiniLM-L6-v2", 
+            docs = self.SE_database.getAllArticles(), 
+            documentStore = InMemoryDocumentStore()
+            )
+        
+        index.execute()
+        index.draw("indexing_pipeline.png")
+
+        retrieve = RetrieverPipeline(textEmbedderModel = "sentence-transformers/all-MiniLM-L6-v2", 
+                                        rankModel = "BAAI/bge-reranker-base", 
+                                        embeddedDocumentStore = index.getDocumentStore()
+                                        )
+        
+        self.SE = SearchEngine(retrieve)
+        self.SE.execute_pipeline()
+
+        retrieve.draw("retrieval_pipeline.png")
+
 
     def search(self, query: str):
-        results = self.SE.search(query, 10)
+        # engine = self.SE.search(query, 10)
+        results = self.SE_database.getIndex(self.SE.filter(self.SE.search(query)), 10)
         search_items = [
             json.dumps(
                 self.database.iloc[idx].fillna("null").to_dict(), allow_nan=False
             )
-            for idx, _, _ in results
+            for idx in results
         ]
         print(self.database.iloc[2].fillna("null"))
         return search_items
@@ -150,4 +177,5 @@ class SocketServer:
 if __name__ == "__main__":
     server = SocketServer()
     server.set_database("./Database/database.csv")
+    server.set_searchEngine()
     server.start_server(IP, PORT)

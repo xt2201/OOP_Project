@@ -80,25 +80,12 @@
 
 
          </VBox>
-
-         <!--         <HBox fx:id="buttonContainer" layoutX="307.0" layoutY="363.0" prefHeight="31.0" prefWidth="1132.0" spacing="10">-->
-         <!--            <Button prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #211f54;" text="Bitcoin" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #211f54;" text="Etherum" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="137.0" style="-fx-background-color: #211f54;" text="TetherUSD" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="147.0" style="-fx-background-color: #211f54;" text="BinanceCoin" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #211f54;" text="Solana" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="138.0" style="-fx-background-color: #211f54;" text="USD Coin" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #211f54;" text="Ripple" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #211f54;" text="Dogecoin" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="157.0" style="-fx-background-color: #211f54;" text="Cardano" textFill="WHITE" />-->
-         <!--            <Button prefHeight="26.0" prefWidth="187.0" style="-fx-background-color: #211f54;" text="SHIBAINU" textFill="WHITE" />-->
-         <!--         </HBox>-->
-
+         
 
          <Button layoutX="850.0" layoutY="323.0" mnemonicParsing="false" onAction="#handleSearch" text="Search" />
          <Label layoutX="14.0" layoutY="133.0" text="Fetch" textFill="WHITE" />
 
-         <Label layoutX="166.0" layoutY="423.0" text="Trending recently" textFill="#c3c2c7">
+         <Label layoutX="166.0" layoutY="423.0" text="Searching recently" textFill="#c3c2c7">
             <font>
                <Font name="Candara" size="14.0" />
             </font>

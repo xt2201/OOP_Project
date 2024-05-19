@@ -40,7 +40,7 @@ public abstract class Article {
         pane2.setPrefSize(655, 180);
         pane2.setStyle("-fx-background-color: #020023;");
 
-        ImageView linkImageView = new ImageView(new Image("file:" + link));
+        ImageView linkImageView = new ImageView(new Image("file:" + "https://c.biztoc.com/p/f0cd87090d057f49/s.webp"));
         linkImageView.setLayoutX(22);
         linkImageView.setLayoutY(15);
         linkImageView.setFitWidth(170);

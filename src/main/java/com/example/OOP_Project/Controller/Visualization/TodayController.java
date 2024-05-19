@@ -29,21 +29,23 @@ public class TodayController extends Display {
 
     public void handleSearch() {
         String searchText = input.getText();
+        String header = "1-";
         System.out.println("Từ khóa tìm kiếm: " + searchText);
 
-        getSearchResult(searchText);
+        getSearchResult(header, searchText);
     }
     public void handleSearch2(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
+        String header = "2-";
         // Lấy text của Button
         String buttonText = clickedButton.getText();
         System.out.println("Từ khóa tìm kiếm: " + buttonText);
 
-        getSearchResult(buttonText);
+        getSearchResult(header, buttonText);
 
     }
 
-    public void getSearchResult(String Text) {
+    public void getSearchResult(String header, String Text) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -54,7 +56,7 @@ public class TodayController extends Display {
                 client.setRefreshStatus(false);
             }
         });
-        client.sendMessageToServer("2-" + Text);
+        client.sendMessageToServer(header + Text);
     }
 
 
