@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public abstract class Display {
+public class Display {
     @FXML
     public DetailController detailController;
 
@@ -202,8 +202,10 @@ public abstract class Display {
         detailController.showDetail();
         detailController.setDetail(title, type, news, summary, category, tag, time, facebookLink, imageLink);
     }
+
     private Pane checkReadLaterPane;
     private Boolean read_later = false;
+
     public AnchorPane createArticle(String _title, String _type, String _news, String _summary, String link) {
         AnchorPane root = new AnchorPane();
         root.setPrefSize(675, 200);
@@ -266,8 +268,6 @@ public abstract class Display {
         summaryLabel.setFont(Font.font("System Bold", 13));
         summaryLabel.setWrapText(true);
 
-
-
         checkReadLaterPane = new Pane();
         checkReadLaterPane.setLayoutX(0);
         checkReadLaterPane.setLayoutY(130);
@@ -299,8 +299,8 @@ public abstract class Display {
         laterButton.setStyle("-fx-background-color: #020023;");
         URL imageUrl = getClass().getResource("/image/later.png");
 
-            Image aterImage = new Image(imageUrl.toExternalForm());
-            ImageView laterImageView = new ImageView(aterImage);
+        Image aterImage = new Image(imageUrl.toExternalForm());
+        ImageView laterImageView = new ImageView(aterImage);
         laterImageView.setFitWidth(40);
         laterImageView.setFitHeight(50);
         laterButton.setGraphic(laterImageView);
@@ -321,12 +321,13 @@ public abstract class Display {
 
         return root;
     }
+
     public boolean getPane() {
         return read_later;
     }
+
     public void setsPane(Boolean init) {
         this.read_later = init;
     }
-
 
 }
