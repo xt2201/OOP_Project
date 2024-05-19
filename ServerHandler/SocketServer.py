@@ -122,7 +122,7 @@ if __name__ == "__main__":
     num_input = int(input("Input corresponding number: "))
     match num_input:
         case 1:
-            server.set_search_engine(SearchEngine1("./Database/database.csv"))
+            server.set_search_engine(SearchEngine1("./Database/top100_blockchain.csv"))
         case 2:
             server.set_search_engine(SearchEngine2())
     server.start(IP, PORT)
