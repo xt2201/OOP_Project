@@ -81,6 +81,7 @@ public class SocketClient extends Socket {
                             int pos = Integer.parseInt(messageFromServer.substring(s1 + 1, s2));
                             String jsonString = messageFromServer.substring(s2 + 1);
                             TodayController.addSearchResult(pos, jsonString);
+                            TodayController.addSearchResult_storage(pos, jsonString);
                         } else if (messageFromServer.indexOf("-refresh") == 0) {
                             setRefreshStatus(true);
                             System.out.println("Refresh set: " + refresh);

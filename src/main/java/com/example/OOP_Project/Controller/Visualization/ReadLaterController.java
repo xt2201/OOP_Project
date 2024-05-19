@@ -2,8 +2,9 @@ package com.example.OOP_Project.Controller.Visualization;
 
 import java.util.ArrayList;
 
-import com.example.OOP_Project.Controller.DataManagement.DataController;
-import com.example.OOP_Project.Controller.DataManagement.Display;
+import com.example.OOP_Project.Controller.Display.Display;
+import com.example.OOP_Project.Controller.Storage.DataController;
+
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 

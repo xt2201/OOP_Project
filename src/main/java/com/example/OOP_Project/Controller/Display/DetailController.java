@@ -1,4 +1,4 @@
-package com.example.OOP_Project.Controller.DataManagement;
+package com.example.OOP_Project.Controller.Display;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
