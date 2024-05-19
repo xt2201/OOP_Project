@@ -69,7 +69,7 @@ def main():
     ]
 
     # Open the CSV file in append mode
-    with open("top100_blockchain.csv", mode="w", newline="", encoding="utf-8") as file:
+    with open(file_path, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
 
         # Write the header only if the file does not exist
