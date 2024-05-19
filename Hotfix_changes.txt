@@ -1,0 +1,29 @@
+Changes made in this hotfix
+
+### Server side ###
+(dir) ServerHandler
+- [Update] Seperate search_engine into its own package with news_api as a subpackage
+
+(dir) search_engine
+- [New] Interface SearchEngine interface that all SE must implement
+- [New] Class SearchEngine1 which utilizes sklearn text processing
+- [New] Class SearchEngine2 which uses newsapi
+- [Rename] That one search_engine Thanh added that I can't run into IDKsearchEngine
+
+(file) SocketServer.py
+- [Update] SocketServer now extends Socket class directly
+- [Remove] SocketServer methods: set_database, search, call
+- [Update] SocketServer attribute SE now has a set method, SearchEngine instance must be initialized separately rather than uses call and search for NewsAPI and local SearchEngine respectively.
+- [Update] Added options to select SearchEngine in main
+
+
+### Client side ###
+(file) SocketClient.java
+- [Update] SocketClient now extends Socket class directly
+
+(file) TodayController.java
+- [Update] client attribute is now static
+- [Remove] client's constructor in initialize
+
+### Bug fixes ###
+- TodayController.java: No longer create new client when initialize new instances of TodayController
