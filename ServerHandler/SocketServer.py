@@ -122,7 +122,10 @@ if __name__ == "__main__":
     num_input = int(input("Input corresponding number: "))
     match num_input:
         case 1:
-            server.set_search_engine(SearchEngine1("./Database/top100_blockchain.csv"))
+            database = pd.read_csv(
+                "./Database/news_change_delimiter.csv", delimiter="::", engine="python"
+            )
+            server.set_search_engine(SearchEngine1(database))
         case 2:
             server.set_search_engine(SearchEngine2())
     server.start(IP, PORT)
