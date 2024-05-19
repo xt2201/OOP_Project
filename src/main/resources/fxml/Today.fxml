@@ -96,7 +96,7 @@
 
 
          <Button layoutX="850.0" layoutY="323.0" mnemonicParsing="false" onAction="#handleInputTextSearch" text="Search" />
-         <Label layoutX="14.0" layoutY="133.0" text="Fetch" textFill="WHITE" />
+
 
          <Label layoutX="166.0" layoutY="423.0" text="Trending recently" textFill="#c3c2c7">
             <font>

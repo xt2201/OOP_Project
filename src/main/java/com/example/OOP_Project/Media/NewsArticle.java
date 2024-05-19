@@ -37,6 +37,6 @@ public class NewsArticle {
     }
 
     public String[] toArray() {
-        return new String[] { title, type, news, summary, category, tags, publishDate, link, img_url };
+        return new String[] { title, type, category, summary, news, tags, publishDate, link, img_url };
     }
 }

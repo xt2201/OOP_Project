@@ -1,4 +1,4 @@
-package com.example.OOP_Project.Controller.DataManagement;
+package com.example.OOP_Project.Controller.Display;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -63,12 +63,12 @@ public abstract class Article {
         typeLabel.setPrefSize(250, 20);
 
         Label newsLabel = new Label(_news);
-        newsLabel.setLayoutX(480);
+        newsLabel.setLayoutX(400);
         newsLabel.setLayoutY(65);
         newsLabel.setTextFill(Color.rgb(134, 50, 189));
         newsLabel.setFont(Font.font("System Bold", 13));
         newsLabel.setWrapText(true);
-        newsLabel.setPrefSize(110, 20);
+        newsLabel.setPrefSize(200, 20);
 
         Label summaryLabel = new Label(_summary);
         summaryLabel.setLayoutX(218);
