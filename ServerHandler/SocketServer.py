@@ -2,7 +2,8 @@ import socket
 from threading import Thread
 import json
 import pandas as pd
-from search_engine import SearchEngine1
+from search_engine import SearchEngine
+from search_engine import SearchEngine1, SearchEngine2
 
 # Typing
 Socket = socket.socket
@@ -46,7 +47,7 @@ class SocketServer(Socket):
         self.database_path: str | None
         self.database: DataFrame | None
         # Search engine
-        self.SE
+        self.SE: SearchEngine = None
         # Search settings
         self.page_size = 10
         # Socket clients
@@ -57,6 +58,8 @@ class SocketServer(Socket):
         self.SE = se
 
     def start(self, ip: str, port: int, max_connection=5) -> None:
+        if self.SE is None:
+            raise Exception("No search engine is initialized.")
         super().__init__(socket.AF_INET, socket.SOCK_STREAM)
         self.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
         self.bind((ip, port))
@@ -111,5 +114,15 @@ class SocketServer(Socket):
 
 if __name__ == "__main__":
     server = SocketServer()
-    server.set_search_engine(SearchEngine1("./Database/database.csv"))
+    print(
+        """Please select a search engine:
+    1: SearchEngine1 - sklearn text processing with local database
+    2: SearchEngine2 - newsapi with quick search time, no local database"""
+    )
+    num_input = int(input("Input corresponding number: "))
+    match num_input:
+        case 1:
+            server.set_search_engine(SearchEngine1("./Database/database.csv"))
+        case 2:
+            server.set_search_engine(SearchEngine2())
     server.start(IP, PORT)

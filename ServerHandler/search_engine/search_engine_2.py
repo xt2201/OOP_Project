@@ -1,4 +1,4 @@
-from ServerHandler.interface.se_interface import SearchEngine
+from se_interface import SearchEngine
 from news_api import NewsCaller
 
 from typing import Iterable, Literal
@@ -26,6 +26,7 @@ class SearchEngine2(SearchEngine):
                 "publishDate": res["publishDate"],
             }
             pprint(item_dict)
+        print(res.keys())
 
     def search(self, query: str, top_k=5, verbose: Literal[0, 1] = 0):
         caller = NewsCaller(query, self.language, self.sort_by, top_k)

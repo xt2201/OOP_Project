@@ -1,14 +1,14 @@
-from interface import SearchEngine
+from typing import Iterable, Literal
+from pprint import pp as pprint
+
 
 import pandas as pd
 import numpy as np
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from typing import Iterable, Literal
-from pprint import pp as pprint
+from se_interface import SearchEngine
 
 DataFrame = pd.DataFrame
 
@@ -80,5 +80,5 @@ if __name__ == "__main__":
     # Perform search
     query = "New York crypto news"
     print(f"Query: {query}")
-    results = search_engine.search(query, verbose=2)
+    results = search_engine.search(query, verbose=1)
     print("Done")
