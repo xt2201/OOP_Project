@@ -2,13 +2,11 @@ import socket
 from threading import Thread
 import json
 import pandas as pd
-from NewsAPI import NewsCaller
-from SearchEngine import SearchEngine
+from search_engine import SearchEngine1
 
 # Typing
 Socket = socket.socket
 DataFrame = pd.DataFrame
-
 
 IP = "127.0.0.1"
 PORT = 8888
@@ -48,12 +46,15 @@ class SocketServer(Socket):
         self.database_path: str | None
         self.database: DataFrame | None
         # Search engine
-        self.SE: SearchEngine | NewsCaller
+        self.SE
         # Search settings
         self.page_size = 10
         # Socket clients
         self.clients: list[Socket] = []
         self.nicknames: list[str] = []
+
+    def set_search_engine(self, se):
+        self.SE = se
 
     def start(self, ip: str, port: int, max_connection=5) -> None:
         super().__init__(socket.AF_INET, socket.SOCK_STREAM)
@@ -63,39 +64,10 @@ class SocketServer(Socket):
         print(f"Server started at {ip} on port {port}")
         self._receive()
 
-    def set_database(self, path: str):
-        self.database_path = path
-        self.database = pd.read_csv(path)
-        print(f"Database loaded from {path}")
-        self.SE = SearchEngine(self.database)
-    
-    def set_caller(self, sort_by="publishedAt"):
-        self.SE = 
-
-    def search(self, query: str):
+    def get_search_result(self, query: str):
         results = self.SE.search(query, 10)
-        search_items = [
-            json.dumps(
-                self.database.iloc[idx].fillna("null").to_dict(), allow_nan=False
-            )
-            for idx, _, _ in results
-        ]
+        search_items = [json.dumps(res, allow_nan=False) for res in results]
         return search_items
-
-    def call(self, query: str):
-        page_size = 10
-        caller = NewsCaller(query, sort_by="publishedAt", page_size=page_size)
-        called_items = [
-            json.dumps(caller.get_single_article_details(idx))
-            for idx in range(page_size)
-        ]
-        return called_items
-
-    def get_search_result(self, message: str):
-        if message[0] == "1":
-            return self.search(query=message[2:])
-        if message[0] == "2":
-            return self.call(query=message[2:])
 
     def _handle(self, client: Socket):
         while True:
@@ -139,5 +111,5 @@ class SocketServer(Socket):
 
 if __name__ == "__main__":
     server = SocketServer()
-    server.set_database("./Database/database.csv")
+    server.set_search_engine(SearchEngine1("./Database/database.csv"))
     server.start(IP, PORT)

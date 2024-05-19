@@ -1,4 +1,4 @@
-from ServerHandler.NewsAPI.NewsCaller import NewsCaller
+from NewsCaller import NewsCaller
 import csv
 import os
 
@@ -6,12 +6,14 @@ import os
 # Main function
 def main():
     query = "usd coin"
+    language = "en"
     sort_by = "popularity"
     page_size = 100
     print(f"Query: {query}")
+    print(f"Language: {language}")
     print(f"Sort by: {sort_by}")
     print(f"Page size: {page_size}")
-    news_caller = NewsCaller(query, sort_by, page_size)
+    news_caller = NewsCaller(query, language, sort_by, page_size)
 
     file_path = "./Database/blockchain_100.csv"
     file_exists = os.path.isfile(file_path)

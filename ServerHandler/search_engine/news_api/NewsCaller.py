@@ -6,14 +6,14 @@ class NewsCaller(NewsApiClient):
     def __init__(
         self,
         query: str,
+        language="en",
         sort_by: Literal["relevancy", "popularity", "publishedAt"] = "publishedAt",
         page_size: int = 100,
     ):
         super().__init__(api_key="9264da2e99d64499b3175a5029bd6d9a")
-        self.language = "en"
         self._articles = self.get_everything(
             q=query,
-            language=self.language,
+            language=language,
             page_size=page_size,
             sort_by=sort_by,
         )["articles"]

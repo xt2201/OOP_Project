@@ -41,7 +41,7 @@ public class TodayController extends Display {
     public void handleInputTextSearch() {
         String searchText = input.getText();
         System.out.println("Từ khóa tìm kiếm: " + searchText);
-        getSearchResult(searchText);
+        updateSearchResult(searchText);
     }
 
     public void handlePresetButtonSearch(ActionEvent event) {
@@ -49,11 +49,11 @@ public class TodayController extends Display {
         // Lấy text của Button
         String buttonText = clickedButton.getText();
         System.out.println("Từ khóa tìm kiếm: " + buttonText);
-        getSearchResult(buttonText);
+        updateSearchResult(buttonText);
 
     }
 
-    public void getSearchResult(String Text) {
+    public void updateSearchResult(String text) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -63,7 +63,7 @@ public class TodayController extends Display {
                 client.setRefreshStatus(false);
             }
         });
-        client.sendMessageToServer("2-" + Text);
+        client.sendMessageToServer(text);
     }
 
     @FXML
