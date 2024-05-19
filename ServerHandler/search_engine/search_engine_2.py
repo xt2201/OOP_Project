@@ -30,6 +30,7 @@ class SearchEngine2(SearchEngine):
 
     def search(self, query: str, top_k=5, verbose: Literal[0, 1] = 0):
         caller = NewsCaller(query, self.language, self.sort_by, top_k)
+        print(len(caller.get_articles()))
         results = [caller.get_single_article_details(idx) for idx in range(top_k)]
         self._verbose(verbose, results)
         return results
