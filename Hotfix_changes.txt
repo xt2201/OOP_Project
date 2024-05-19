@@ -23,7 +23,10 @@ Changes made in this hotfix
 
 (file) TodayController.java
 - [Update] client attribute is now static
-- [Remove] client's constructor in initialize
+- [Remove] client's constructor in TodayController.initialize
 
 ### Bug fixes ###
 - TodayController.java: No longer create new client when initialize new instances of TodayController
+
+### Known bugs ###
+- App fails to run while using SearchEngine2
