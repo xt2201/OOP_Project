@@ -25,6 +25,10 @@ Changes made in this hotfix
 - [Update] client attribute is now static
 - [Remove] client's constructor in TodayController.initialize
 
+(file) NavigationController.java
+- [Remove] all attributes since thay are unnecessary now
+- [New] private method switchToNewPage that is shared among the switch methods to save some line of codes
+
 ### Bug fixes ###
 - TodayController.java: No longer create new client when initialize new instances of TodayController
 
